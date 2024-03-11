@@ -69,29 +69,41 @@ public class FileReader {
             try (PDPageContentStream contentStream = new PDPageContentStream(document, page)) {
                 contentStream.setFont(pdfFont, 12);
 
-                // Split content into lines
-                String[] words = content.split("\\s+"); // split by whitespace
-                StringBuilder currentLine = new StringBuilder();
+                // Split content into paragraphs
+                String[] paragraphs = content.split("\\n\\s*\\n");
+
                 float y = 700; // Initial y-coordinate
 
-                for (String word : words) {
-                    float width = pdfFont.getStringWidth(currentLine + " " + word) / 1000 * 12;
-                    if (width > 500) { // Width of the page - Margin
-                        contentStream.beginText();
-                        contentStream.newLineAtOffset(50, y);
-                        contentStream.showText(currentLine.toString());
-                        contentStream.endText();
-                        y -= 12; // Move to the next line
-                        currentLine.setLength(0);
-                    }
-                    currentLine.append(word).append(" ");
-                }
+                // Iterate over each paragraph
+                for (String paragraph : paragraphs) {
+                    // Split paragraph into words
+                    String[] words = paragraph.split("\\s+"); // split by whitespace
+                    StringBuilder currentLine = new StringBuilder();
 
-                // Write the last line
-                contentStream.beginText();
-                contentStream.newLineAtOffset(50, y);
-                contentStream.showText(currentLine.toString());
-                contentStream.endText();
+                    // Iterate over each word in the paragraph
+                    for (String word : words) {
+                        float width = pdfFont.getStringWidth(currentLine + " " + word) / 1000 * 12;
+                        if (width > 500) { // Width of the page - Margin
+                            contentStream.beginText();
+                            contentStream.newLineAtOffset(50, y);
+                            contentStream.showText(currentLine.toString());
+                            contentStream.endText();
+                            y -= 12; // Move to the next line
+                            currentLine.setLength(0);
+                        }
+                        currentLine.append(word).append(" ");
+                    }
+
+                    // Write the last line of the paragraph
+                    contentStream.beginText();
+                    contentStream.newLineAtOffset(50, y);
+                    contentStream.showText(currentLine.toString());
+                    contentStream.endText();
+                    y -= 12; // Move to the next line
+
+                    // Add extra space between paragraphs
+                    y -= 12;
+                }
             }
 
             String timestamp = Long.toString(System.currentTimeMillis());
