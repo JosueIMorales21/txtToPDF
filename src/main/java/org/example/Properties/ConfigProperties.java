@@ -12,10 +12,10 @@ public class ConfigProperties {
 
     private static final Logger logger = Logger.getLogger(LogConfig.class.getName());
 
-    private static final String PROPERTIES_FILE = "";
+    private static final String PROPERTIES_FILE = "C:\\Users\\josue\\OneDrive\\Desktop\\config.properties";
     //private static final String PROPERTIES_FILE = ".\\config.properties";
 
-    public static String HOLA;
+    public static String KEY_WORD;
 
     public static void loadProperties() {
         logger.log(Level.INFO, "Cargando valores CONFIG.PROPERTIES...");
@@ -23,7 +23,7 @@ public class ConfigProperties {
         try (InputStream input = new FileInputStream(PROPERTIES_FILE)) {
             properties.load(input);
 
-            HOLA = properties.getProperty("HOLA");
+            KEY_WORD = properties.getProperty("KEY_WORD");
 
             logger.log(Level.INFO, "Valores CONFIG.PROPERTIES cargados correctamente");
         } catch (Exception e) {

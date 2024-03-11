@@ -10,3 +10,15 @@ PACKAGE "Properties":
 - ConfigProperties class: Esta clase se encarga de almacenar todas las variables que se encontrarán en el archivo "config.properties",
 ahí se puede modificar la ruta de ubicación del archivo "config.properties" previamente creado por el usuario, también se pueden
 modificar, eliminar o agregar las variables requeridas en el programa.
+
+PACKAGE "FileReader":
+- FileReader class: Esta clase contiene los siguientes métodos:
+1. txtToPDF(String input, String output, String keyWord): Este método se encarga de la lógica principal de la clase, contiene la combinación
+de métodos necesaria para que el programa funcione correctamente.
+2. readFileToString(String filePath): Este método se encarga de leer el documento que se indica en la ruta para después almacenarlo como
+un String en una variable.
+3. extractValue(String content, String keyword): Este método busca el valor "KEY_WORD" dentro de la variable String que se almacenó
+previamente.
+4. createPDF(String content, String keyword, String output): Este método se encarga de crear un nuevo archivo .PDF, que tendrá por contenido
+el todo el texto que se extrajo previamente con el método "readFileToString", para después asignarle un nombre nuevo al .PDF que será
+el "KEY_WORD" mas la fecha actual (ddMMyy).

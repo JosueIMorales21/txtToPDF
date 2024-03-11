@@ -15,7 +15,7 @@ public class LogConfig {
             String currentDate = dateFormat.format(new Date());
             String logFileName = "log" + currentDate + ".log";
 
-            String logFilePath = "\\" + logFileName;
+            String logFilePath = "C:\\Users\\josue\\OneDrive\\Desktop\\" + logFileName;
             //String logFilePath = ".\\" + logFileName;
 
             FileHandler fileHandler = new FileHandler(logFilePath, true);
