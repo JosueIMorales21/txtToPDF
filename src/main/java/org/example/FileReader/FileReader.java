@@ -69,29 +69,29 @@ public class FileReader {
             try (PDPageContentStream contentStream = new PDPageContentStream(document, page)) {
                 contentStream.setFont(pdfFont, 12);
 
-                String[] lines = content.split("\\r?\\n");
-                float y = 500; // Initial y-coordinate
+                // Split content into lines
+                String[] words = content.split("\\s+"); // split by whitespace
+                StringBuilder currentLine = new StringBuilder();
+                float y = 700; // Initial y-coordinate
 
-                // Write each line to the PDF
-                for (String line : lines) {
-                    // Check if adding this line will exceed the page height
-                    if (y - 12 < 0) {
-                        // Add a new page
+                for (String word : words) {
+                    float width = pdfFont.getStringWidth(currentLine + " " + word) / 1000 * 12;
+                    if (width > 500) { // Width of the page - Margin
+                        contentStream.beginText();
+                        contentStream.newLineAtOffset(50, y);
+                        contentStream.showText(currentLine.toString());
                         contentStream.endText();
-                        contentStream.close();
-                        page = new PDPage();
-                        document.addPage(page);
-                        contentStream.setFont(pdfFont, 12);
-                        y = 500;
+                        y -= 12; // Move to the next line
+                        currentLine.setLength(0);
                     }
-
-                    // Begin a new text object for each line
-                    contentStream.beginText();
-                    contentStream.newLineAtOffset(50, y);
-                    contentStream.showText(line.trim());
-                    contentStream.endText();
-                    y -= 12; // Move to the next line
+                    currentLine.append(word).append(" ");
                 }
+
+                // Write the last line
+                contentStream.beginText();
+                contentStream.newLineAtOffset(50, y);
+                contentStream.showText(currentLine.toString());
+                contentStream.endText();
             }
 
             String timestamp = Long.toString(System.currentTimeMillis());
