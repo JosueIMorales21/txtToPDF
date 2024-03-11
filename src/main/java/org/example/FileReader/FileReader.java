@@ -10,10 +10,14 @@ import org.example.LogConfig.LogConfig;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import static org.example.Main.FONT_SIZE;
 
 public class FileReader {
 
@@ -39,9 +43,10 @@ public class FileReader {
         return content.toString();
     }
 
-    private static String extractValue(String content, String keyword) {
+    private static String extractValue(String content, String keyword) throws IOException {
         logger.log(Level.INFO, "Palabra a buscar: {0}", keyword);
-        String patternString = keyword + ": \"(.*?)\"";
+
+        String patternString = "\\b" + keyword + "\\s*:\\s*(\\S+)";
         Pattern pattern = Pattern.compile(patternString);
         Matcher matcher = pattern.matcher(content);
 
@@ -50,64 +55,63 @@ public class FileReader {
             return matcher.group(1);
         } else {
             logger.log(Level.SEVERE, "Palabra no encontrada");
-            return null;
+            throw new IOException();
         }
     }
 
-    public static void createPDF(String content, String keyword, String output) throws IOException {
-        logger.log(Level.INFO, "CONTENIDO: {0}", content);
+    private static void createPDF(String content, String keyword, String output) throws IOException {
         logger.log(Level.INFO, "Creando el archivo PDF...");
+
+        // Set page parameters
+        final int PAGE_WIDTH = 500; // Maximum width of each line
+        final int MARGIN = 50;
 
         try (PDDocument document = new PDDocument()) {
             PDPage page = new PDPage();
             document.addPage(page);
 
             // Get the font
-            Standard14Fonts.FontName font = Standard14Fonts.getMappedFontName("HELVETICA_BOLD");
-            PDFont pdfFont=  new PDType1Font(font.HELVETICA_BOLD);
+            Standard14Fonts.FontName font = Standard14Fonts.getMappedFontName("TIMES_ROMAN");
+            PDFont pdfFont=  new PDType1Font(font.TIMES_ROMAN);
 
             try (PDPageContentStream contentStream = new PDPageContentStream(document, page)) {
-                contentStream.setFont(pdfFont, 12);
+                contentStream.setFont(pdfFont, FONT_SIZE);
 
-                // Split content into paragraphs
-                String[] paragraphs = content.split("\\n\\s*\\n");
+                // Split content into lines
+                String[] lines = content.split("\\r?\\n");
 
-                float y = 700; // Initial y-coordinate
+                float y = page.getMediaBox().getHeight() - MARGIN; // Initial y-coordinate
 
-                // Iterate over each paragraph
-                for (String paragraph : paragraphs) {
-                    // Split paragraph into words
-                    String[] words = paragraph.split("\\s+"); // split by whitespace
+                for (String line : lines) {
                     StringBuilder currentLine = new StringBuilder();
+                    String[] words = line.split("\\s+");
 
-                    // Iterate over each word in the paragraph
                     for (String word : words) {
-                        float width = pdfFont.getStringWidth(currentLine + " " + word) / 1000 * 12;
-                        if (width > 500) { // Width of the page - Margin
+                        float width = pdfFont.getStringWidth(currentLine + " " + word) / 1000 * FONT_SIZE;
+                        if (width > PAGE_WIDTH) {
                             contentStream.beginText();
-                            contentStream.newLineAtOffset(50, y);
+                            contentStream.newLineAtOffset(MARGIN, y);
                             contentStream.showText(currentLine.toString());
                             contentStream.endText();
-                            y -= 12; // Move to the next line
-                            currentLine.setLength(0);
+                            y -= FONT_SIZE; // Move to the next line
+                            currentLine.setLength(0); // Clear the current line
                         }
                         currentLine.append(word).append(" ");
                     }
 
-                    // Write the last line of the paragraph
+                    // Write the remaining text on the line
                     contentStream.beginText();
-                    contentStream.newLineAtOffset(50, y);
+                    contentStream.newLineAtOffset(MARGIN, y);
                     contentStream.showText(currentLine.toString());
                     contentStream.endText();
-                    y -= 12; // Move to the next line
-
-                    // Add extra space between paragraphs
-                    y -= 12;
+                    y -= FONT_SIZE; // Move to the next line
                 }
             }
 
-            String timestamp = Long.toString(System.currentTimeMillis());
-            document.save(output + "_" + keyword + "_" + timestamp + ".pdf");
+            LocalDate currentDate = LocalDate.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("ddMMyy");
+            String formattedDate = currentDate.format(formatter);
+            document.save(output + keyword + "_" + formattedDate + ".pdf");
             logger.log(Level.INFO, "Archivo PDF creado correctamente.");
         }
     }
