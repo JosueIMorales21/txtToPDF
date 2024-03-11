@@ -17,7 +17,7 @@ import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static org.example.Main.FONT_SIZE;
+import static org.example.Properties.ConfigProperties.FONT_SIZE;
 
 public class FileReader {
 
@@ -66,6 +66,8 @@ public class FileReader {
         // Definir las medidas de la página
         final int PAGE_WIDTH = 500;
         final int MARGIN = 50;
+        int fontSize = Integer.parseInt(FONT_SIZE);
+        logger.log(Level.INFO, "Tamaño de la letra: {0}", fontSize);
 
         try (PDDocument document = new PDDocument()) {
             PDPage page = new PDPage();
@@ -76,7 +78,7 @@ public class FileReader {
             PDFont pdfFont=  new PDType1Font(font.TIMES_ROMAN);
 
             try (PDPageContentStream contentStream = new PDPageContentStream(document, page)) {
-                contentStream.setFont(pdfFont, FONT_SIZE);
+                contentStream.setFont(pdfFont, fontSize);
 
                 // Separar el contenido en párrafos
                 String[] lines = content.split("\\r?\\n");
@@ -88,13 +90,13 @@ public class FileReader {
                     String[] words = line.split("\\s+");
 
                     for (String word : words) {
-                        float width = pdfFont.getStringWidth(currentLine + " " + word) / 1000 * FONT_SIZE;
+                        float width = pdfFont.getStringWidth(currentLine + " " + word) / 1000 * fontSize;
                         if (width > PAGE_WIDTH) {
                             contentStream.beginText();
                             contentStream.newLineAtOffset(MARGIN, y);
                             contentStream.showText(currentLine.toString());
                             contentStream.endText();
-                            y -= FONT_SIZE; // Pasar al siguiente renglón
+                            y -= fontSize; // Pasar al siguiente renglón
                             currentLine.setLength(0);
                         }
                         currentLine.append(word).append(" ");
@@ -105,7 +107,7 @@ public class FileReader {
                     contentStream.newLineAtOffset(MARGIN, y);
                     contentStream.showText(currentLine.toString());
                     contentStream.endText();
-                    y -= FONT_SIZE; // Pasar al siguiente renglón
+                    y -= fontSize; // Pasar al siguiente renglón
                 }
             }
 

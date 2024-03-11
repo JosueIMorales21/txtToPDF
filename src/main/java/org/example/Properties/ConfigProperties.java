@@ -16,6 +16,7 @@ public class ConfigProperties {
     //private static final String PROPERTIES_FILE = ".\\config.properties";
 
     public static String KEY_WORD;
+    public static String FONT_SIZE;
 
     public static void loadProperties() {
         logger.log(Level.INFO, "Cargando valores CONFIG.PROPERTIES...");
@@ -24,6 +25,7 @@ public class ConfigProperties {
             properties.load(input);
 
             KEY_WORD = properties.getProperty("KEY_WORD");
+            FONT_SIZE = properties.getProperty("FONT_SIZE");
 
             logger.log(Level.INFO, "Valores CONFIG.PROPERTIES cargados correctamente");
         } catch (Exception e) {
