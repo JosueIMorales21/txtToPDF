@@ -1,0 +1,136 @@
+/Sunnel_Web/accounts/searchAccounts
+
+{
+	"cardId" : "6620010264246832"
+}
+
+{
+   "index": 0,
+   "sorting": [   {
+      "type": "ASC",
+      "attributeName": "accountId",
+      "order": 1
+   }],
+   "enableSorting": true,
+   "numberRowsVisualized": 1,
+   "totalNumberRows": 1,
+   "data": [   {
+      "accountId": 1845961,
+      "cardId": "6620010264246832",
+      "accountProfileId": 1,
+      "accountProfileDescription": "CLIENTES P.H.",
+      "accountClass": "CREDIT",
+      "creditAccountInformation":       {
+         "acceleratedBalanceInd": "F",
+         "allowedCrLimitChngExtSrcDate": "2019-04-05 00:00:00",
+         "allowedCrLimitChngExtSrcInd": "T",
+         "badDebtInd": "F",
+         "billingCycleId": 10,
+         "blockedInd": "T",
+         "blockingDate": "2022-09-10 00:00:00",
+         "overLimitInd": "F",
+         "reestructuredInd": "F",
+         "tradingBalanceInd": "F",
+         "tradingBalanceCount": 0,
+         "stopFinChargeInd": "F",
+         "uncollectableInd": "F",
+         "currencyBillingType": "L",
+         "overduePeriod": 1,
+         "bouncedChecksCount": 0,
+         "lastCreditLimitChange": "2019-08-04 00:00:00",
+         "lastInterestAccruingDate": "2022-09-10 00:00:00",
+         "nextMemberShipDate": "2027-07-26 00:00:00",
+         "riskLevel": "NOEVALUATION",
+         "nextBillingDate": "2020-03-31 00:00:00"
+      },
+      "balanceInformationLc":       {
+         "currencyId": 484,
+         "affilPromotionPointsAvailableBal": 0,
+         "affilPromotionPointsExchangeAmount": 0,
+         "billLevelPointsAvailableBal": 0,
+         "billLevelPointsDebitBalance": 0,
+         "billLevelPointsExchangeAmount": 0,
+         "cashAdvAvailableBalance": 0,
+         "cashCreditLimit": 0,
+         "commisionFinancingBalance": 0,
+         "feePostSalePeriodAmount": 20980.92,
+         "feePostSalesExcludedPeriodAmount": 29306.18,
+         "minimumPayment": 8325.26,
+         "noInterestPaymentAmount": 77268.85,
+         "paymentDate": "2022-10-10 00:00:00",
+         "pointsAvailableBalance": 9969244.35,
+         "pointsDebitBalance": 0,
+         "pointsExchangeAmount": 996924.44,
+         "purchaseFinancingBalance": 253901.81,
+         "taxFinancingBalance": 60,
+         "totalAmountInExcess": 0,
+         "totalBalance": 256505.18,
+         "totalContingentInterest": 0,
+         "totalCurrentPaymentAmount": 0,
+         "totalCurrentPeriodAmount": 1356.81,
+         "totalOverdueBalance": 1356.81,
+         "totalOverdueInterest": 0,
+         "totalOverdueInterestTax": 0,
+         "totalPeriodAmount": 8325.26,
+         "totalPrincipal": 254336.81,
+         "totalRegularInterest": 699.62,
+         "totalRegularInterestTax": 111.94
+      },
+      "fspCrBillingLevelFuture":       {
+         "cardPlasticTypeId": 39,
+         "plasticCardExpirationDate": "2025-05-31 00:00:00",
+         "plasticCardInd": "F",
+         "rateDif": 2,
+         "vlrBillingAmountDif": 6786.37,
+         "vlrMonthBillingAmount": 0,
+         "vlrMonthRevBillingAmount": 0,
+         "vlrTotalBillingAmount": 293213.63,
+         "fSPBillingLeJvelIDProy": 4,
+         "fSPBillingLevelIDAct": 3,
+         "fSPBillingLevelPlasticCard": "5",
+         "billLevelPointsExpirationDate": "2022-12-31 00:00:00"
+      }
+   }]
+}
+
+/RestfulServers/tokens
+
+{
+	"user" : "Sunarcpos",
+	"password" : "X&20#los"
+}
+
+{"entities": [
+      {
+      "id": "PH_ARCAJS",
+      "name": "Sunnel Html5",
+      "countryId": "MX",
+      "showTransactionId": "T",
+      "adminUserProfileId": "1000",
+      "customization":       {
+         "name": "PH",
+         "country": "MX"
+      },
+      "localeEntity":       {
+         "language": "es",
+         "localLocale": "es",
+         "foreignLocale": "en"
+      }
+   },
+      {
+      "id": "GAMMA",
+      "name": "Sunnel Html5",
+      "countryId": "MX",
+      "showTransactionId": "T",
+      "adminUserProfileId": "1000",
+      "customization":       {
+         "name": "PH",
+         "country": "MX"
+      },
+      "localeEntity":       {
+         "language": "es",
+         "localLocale": "es",
+         "foreignLocale": "en"
+      }
+   }
+]}
