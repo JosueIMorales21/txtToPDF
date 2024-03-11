@@ -69,9 +69,8 @@ public class FileReader {
             try (PDPageContentStream contentStream = new PDPageContentStream(document, page)) {
                 contentStream.setFont(pdfFont, 12);
 
-                // Split content into lines
                 String[] lines = content.split("\\r?\\n");
-                float y = 700; // Initial y-coordinate
+                float y = 500; // Initial y-coordinate
 
                 // Write each line to the PDF
                 for (String line : lines) {
@@ -83,7 +82,7 @@ public class FileReader {
                         page = new PDPage();
                         document.addPage(page);
                         contentStream.setFont(pdfFont, 12);
-                        y = 700;
+                        y = 500;
                     }
 
                     // Begin a new text object for each line
