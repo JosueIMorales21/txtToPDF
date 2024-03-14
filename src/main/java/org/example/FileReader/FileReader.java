@@ -74,7 +74,6 @@ public class FileReader {
             document.addPage(page);
 
             // Definir la fuente
-            Standard14Fonts.FontName font = Standard14Fonts.getMappedFontName("TIMES_ROMAN");
             PDFont pdfFont=  new PDType1Font(Standard14Fonts.FontName.TIMES_ROMAN);
 
             try (PDPageContentStream contentStream = new PDPageContentStream(document, page)) {
