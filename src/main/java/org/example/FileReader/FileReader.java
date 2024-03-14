@@ -75,7 +75,7 @@ public class FileReader {
 
             // Definir la fuente
             Standard14Fonts.FontName font = Standard14Fonts.getMappedFontName("TIMES_ROMAN");
-            PDFont pdfFont=  new PDType1Font(font.TIMES_ROMAN);
+            PDFont pdfFont=  new PDType1Font(Standard14Fonts.FontName.TIMES_ROMAN);
 
             try (PDPageContentStream contentStream = new PDPageContentStream(document, page)) {
                 contentStream.setFont(pdfFont, fontSize);
@@ -115,7 +115,7 @@ public class FileReader {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("ddMMyy");
             String formattedDate = currentDate.format(formatter);
             String logTitle = keyword + "_" + formattedDate + ".pdf";
-            String title = output + keyword + "_" + formattedDate + ".pdf";
+            String title = output + "_" + logTitle;
             logger.log(Level.INFO, "Nombre del PDF: {0}", logTitle);
             document.save(title);
             logger.log(Level.INFO, "Archivo PDF creado correctamente.");
