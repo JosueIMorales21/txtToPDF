@@ -114,7 +114,7 @@ public class FileReader {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("ddMMyy");
             String formattedDate = currentDate.format(formatter);
             String logTitle = keyword + "_" + formattedDate + ".pdf";
-            String title = output + "_" + logTitle;
+            String title = output + logTitle;
             logger.log(Level.INFO, "Nombre del PDF: {0}", logTitle);
             document.save(title);
             logger.log(Level.INFO, "Archivo PDF creado correctamente.");

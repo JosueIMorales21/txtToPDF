@@ -11,7 +11,7 @@ public class LogConfig {
 
     public static void loadConfig() {
         try {
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
+            SimpleDateFormat dateFormat = new SimpleDateFormat("ddMMyyyy");
             String currentDate = dateFormat.format(new Date());
             String logFileName = "log" + currentDate + ".log";
 
