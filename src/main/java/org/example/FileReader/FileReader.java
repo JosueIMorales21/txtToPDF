@@ -17,20 +17,17 @@ import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static org.example.Properties.ConfigProperties.FONT_SIZE;
-
 public class FileReader {
 
     private static final Logger logger = Logger.getLogger(LogConfig.class.getName());
 
-    public static void txtToPDF(String input, String output, String keyWord) throws IOException{
+    public static void txtToPDF(String input, String output, String keyWord, String kind) throws IOException{
             String content = readFileToString(input);
             String keyValue = extractValue(content, keyWord);
-            createPDF(content, keyValue, output);
+            createPDF(content, kind, keyValue, output);
     }
 
     private static String readFileToString(String filePath) throws IOException {
-        logger.log(Level.INFO, "Leyendo el archivo...");
         StringBuilder content = new StringBuilder();
 
         try (BufferedReader reader = new BufferedReader(new java.io.FileReader(filePath))) {
@@ -38,36 +35,33 @@ public class FileReader {
             while ((line = reader.readLine()) != null) {
                 content.append(line).append("\n");
             }
-            logger.log(Level.INFO, "Lectura realizada con éxito.");
+            logger.log(Level.INFO, "Archivo encontrado.");
         }
         return content.toString();
     }
 
     private static String extractValue(String content, String keyword) throws IOException {
-        logger.log(Level.INFO, "Palabra a buscar: {0}", keyword);
 
-        String patternString = "\\b" + keyword + "\\s*:\\s*(\\S+)";
+        // Modify the pattern to match "Chk" followed by a space and then the value
+        String patternString = "\\b" + keyword + "\\s+(\\d+)";
         Pattern pattern = Pattern.compile(patternString);
         Matcher matcher = pattern.matcher(content);
 
         if (matcher.find()) {
-            String resp = matcher.group(1);
-            logger.log(Level.INFO, "Valor encontrado: {0}", resp);
-            return resp;
+            return matcher.group(1);
         } else {
-            logger.log(Level.SEVERE, "Palabra no encontrada");
+            logger.log(Level.SEVERE, "Palabra clave sin coincidencias.");
             throw new IOException();
         }
     }
 
-    private static void createPDF(String content, String keyword, String output) throws IOException {
-        logger.log(Level.INFO, "Creando el archivo PDF...");
+
+    private static void createPDF(String content, String kind, String keyword, String output) throws IOException {
 
         // Definir las medidas de la página
         final int PAGE_WIDTH = 500;
         final int MARGIN = 50;
-        int fontSize = Integer.parseInt(FONT_SIZE);
-        logger.log(Level.INFO, "Tamaño de la letra: {0}", fontSize);
+        int fontSize = 12;
 
         try (PDDocument document = new PDDocument()) {
             PDPage page = new PDPage();
@@ -113,7 +107,7 @@ public class FileReader {
             LocalDate currentDate = LocalDate.now();
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("ddMMyy");
             String formattedDate = currentDate.format(formatter);
-            String logTitle = keyword + "_" + formattedDate + ".pdf";
+            String logTitle = kind + "_" + keyword + "_" + formattedDate + ".pdf";
             String title = output + logTitle;
             logger.log(Level.INFO, "Nombre del PDF: {0}", logTitle);
             document.save(title);
