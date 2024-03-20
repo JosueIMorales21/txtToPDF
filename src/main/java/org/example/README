@@ -17,8 +17,32 @@ PACKAGE "FileReader":
 de métodos necesaria para que el programa funcione correctamente.
 2. readFileToString(String filePath): Este método se encarga de leer el documento que se indica en la ruta para después almacenarlo como
 un String en una variable.
-3. extractValue(String content, String keyword): Este método busca el valor "KEY_WORD" dentro de la variable String que se almacenó
+3. extractValue(String content, String keyword): Este método busca el valor "Chk" dentro de la variable String que se almacenó
 previamente.
 4. createPDF(String content, String keyword, String output): Este método se encarga de crear un nuevo archivo .PDF, que tendrá por contenido
 el todo el texto que se extrajo previamente con el método "readFileToString", para después asignarle un nombre nuevo al .PDF que será
 el "KEY_WORD" mas la fecha actual (ddMMyy).
+
+INSTRUCCIONES:
+
+El ejecutable .JAR se ejecuta en la terminal ubicándose en el directorio actual del .JAR con el comando "java -jar Backup_TXT.jar".
+Está construido en jdk 12, por lo que se necesita java 12+ para ejecutar la aplicación correctamente.
+El ejecutable busca dos archivos .TXT: "ticket.txt" y "voucher.txt", el ticket tiene que existir forzosamente, ya que si no se encuentra, el
+programa se detendrá, sin embargo, si el voucher es el faltante, se realizará el procedimiento normal con el ticket únicamente.
+
+Archivos de entrada:
+En el directorio de ejecución(.//) se necesitan los siguientes archivos:
+- Backup_TXT.jar (JAR ejecutable)
+- ticket.txt (Obligatorio)
+- voucher.txt (Opcional)
+
+Resultado:
+El/los PDF generado(s) se encontrarán en el mismo directorio de ejecución(.//) junto con los registros (.log) y serán los siguientes:
+- Archivo .log (registros)
+  Formato del nombre: log_"fecha_actual".log
+
+- PDF Ticket
+  Formato del nombre: ticket_"Chk(Código dentro del ticket/voucher a 4 dígitos ej. 1234)"_"fecha_actual".pdf
+
+- PDF Voucher
+  Formato del nombre: voucher_"Chk(Código dentro del ticket/voucher a 4 dígitos ej. 1234)"_"fecha_actual".pdf
