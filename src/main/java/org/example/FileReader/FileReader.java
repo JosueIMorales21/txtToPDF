@@ -21,12 +21,15 @@ public class FileReader {
 
     private static final Logger logger = Logger.getLogger(LogConfig.class.getName());
 
+    /* Este método une todos los métodos con funcionalidades para hacer un sólo llamado en el método main.
+     Esto nos ayuda a mantener un código limpio y sostenible.   */
     public static void txtToPDF(String input, String output, String keyWord, String kind) throws IOException{
             String content = readFileToString(input);
             String keyValue = extractValue(content, keyWord);
             createPDF(content, kind, keyValue, output);
     }
 
+    // Guarda el contenido extraído del txt en una variable de tipo String
     private static String readFileToString(String filePath) throws IOException {
         StringBuilder content = new StringBuilder();
 
@@ -40,9 +43,9 @@ public class FileReader {
         return content.toString();
     }
 
+    // Busca el valor de la palabra clave en el contenido extraído y la guarda en una variable de tipo String
     private static String extractValue(String content, String keyword) throws IOException {
 
-        // Modify the pattern to match "Chk" followed by a space and then the value
         String patternString = "\\b" + keyword + "\\s+(\\d+)";
         Pattern pattern = Pattern.compile(patternString);
         Matcher matcher = pattern.matcher(content);
@@ -55,7 +58,7 @@ public class FileReader {
         }
     }
 
-
+    // Crea un nuevo archivo PDF que contiene el valor extraído del TXT y asigna por nombre la palabra clave extraída.
     private static void createPDF(String content, String kind, String keyword, String output) throws IOException {
 
         // Definir las medidas de la página
